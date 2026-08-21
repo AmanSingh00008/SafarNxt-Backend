@@ -1,0 +1,15 @@
+{
+  "name": "safarnxt-backend",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Anurag",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
