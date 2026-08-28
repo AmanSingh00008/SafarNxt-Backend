@@ -1,5 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
+import {usermodel} from "../models/user.models.js"
 
 const accessRefreshToken = asyncHandler(async (req, res) => {
   try {
@@ -80,7 +81,45 @@ const RegisterUser = asyncHandler(async (req, res) => {
 
 
 const LoginUser = asyncHandler(async (req, res) => {
-  //
+  const {email, password, username, fullname} = req.body;
+
+  if(!email || !password) {
+    throw new ApiError(400, "Email and password is required")
+  }
+
+  if(!user){
+    throw new ApiError(404, "User not found")
+  }
+
+  const isPasswordValid = password.isPasswordCorrect();
+  if(!isPasswordValid){
+    throw new ApiError(401, "Invalid credentials")
+  }
+
+  const {accessToken, refreshToken} = await generateAccessRefreshToken(user._id)
+
+  const loggedUser = await user.findById(user._id).select("-password -refreshToken")
+
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  };
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+
+      {
+        user: loggedInUser,
+        accessToken,
+        refreshToken,
+      },
+      "User logged in successfully"
+    )
+  );
+
 });
 
 const AccessRefreshToken = asyncHandler(async (req, res) => {
