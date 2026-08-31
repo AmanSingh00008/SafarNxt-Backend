@@ -127,8 +127,25 @@ const AccessRefreshToken = asyncHandler(async (req, res) => {
 });
 
 const LogOutUser = asyncHandler(async (req, res) => {
-  //
-});
+  const user = await findByIdAndUpdate(
+    req.user._id,
+    
+  
+ {
+  $set: {
+    refreshToken: "" || undefined,
+  }
+
+ },
+{ new: true}
+  )
+   res
+    .status()
+    .json(200, {}, "user logout successfully")
+    .clearcookies()
+}
+ 
+);
 
 export {
   generateAccessRefreshToken,
