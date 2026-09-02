@@ -147,10 +147,23 @@ const LogOutUser = asyncHandler(async (req, res) => {
  
 );
 
+const getCurrentUser = asyncHandler(async(req, res) => {
+  const user = await findById(req.user._id).select("-refreshToken -password")
+  if(!user){
+    throw new ApiError(404, "user not found")
+  }
+   
+ return res
+    .status(200)
+    .json(new ApiResponse(200, {user}, "user fetched successfully"))
+
+})
+
 export {
   generateAccessRefreshToken,
   RegisterUser,
   LoginUser,
   AccessRefreshToken,
   LogOutUser,
+  getCurrentUser,
 };
