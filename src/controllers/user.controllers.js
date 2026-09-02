@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
-import { usermodel } from "../models/user.models.js";
+import {User} from "../models/user.models.js"
 
 const accessRefreshToken = asyncHandler(async (req, res) => {
   try {
@@ -73,10 +73,7 @@ return res
   .status(201)
   .json(new ApiResponse(200, createdUser, "User registerd successfully"));
 
-res.status(201).json({
-  success: true,
-  user: user,
-});
+
 
 const LoginUser = asyncHandler(async (req, res) => {
   const { email, password, username, fullname } = req.body;
@@ -123,9 +120,7 @@ const LoginUser = asyncHandler(async (req, res) => {
   );
 });
 
-const AccessRefreshToken = asyncHandler(async (req, res) => {
-  //
-});
+
 
 const LogOutUser = asyncHandler(async (req, res) => {
   const user = await findByIdAndUpdate(
@@ -171,12 +166,38 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "password change successfully"));
 });
+
+const updateAccountDetails = asyncHandler(async(req,res) => {
+  const {email, fullname} = req.body;
+
+  if(!fullname || !email){
+    throw new ApiError(400, "email and password are required")
+
+    const user = await user.findByIdAndUpdate(req.user._id,
+      {
+        $set: {
+          fullname,
+          email: email,
+        }
+      },
+      {new: true }
+    ).select("-password -refreshToken")
+
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, User, "Account details update successfully"))
+
+})
+
 export {
-  generateAccessRefreshToken,
+  accessRefreshToken,
   RegisterUser,
   LoginUser,
-  AccessRefreshToken,
+  
   LogOutUser,
   getCurrentUser,
   changeCurrentPassword,
+  updateAccountDetails
 };
