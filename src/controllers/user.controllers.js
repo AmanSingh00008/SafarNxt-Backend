@@ -214,6 +214,39 @@ const updateAccountDetails = asyncHandler(async(req,res) => {
 
 })
 
+const forgotPasswordRequest = asyncHandler(async(req, res) => {
+  const {email} = req.body;
+  const user = User.findById({email});
+
+  if(!User){
+    throw new ApiError(200, "email doesn't exist")
+  }
+
+  const {unHashedToken, hashedToken, tokenExpiry} = user.generateTemporaryToken();
+
+  await user.save({validateBeforeSave: false});
+
+   await sendEmail({
+    email: user?.email,
+    subject: "Password reset request",
+    mailgenContent: forgotPasswordMailgenContent(
+      user.username,
+      `${process.env.FORGOT_PASSWORD_REDIRECT_URL}/${unHashedToken}`,
+    ),
+  });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "Password reset mail has been sent on your mail id",
+      ),
+    );
+});
+
+
 
 
 export {
@@ -223,5 +256,6 @@ export {
   LogOutUser,
   getCurrentUser,
   changeCurrentPassword,
-  updateAccountDetails
+  updateAccountDetails,
+  forgotPasswordRequest
 };
