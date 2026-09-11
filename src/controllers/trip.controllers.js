@@ -22,4 +22,14 @@ const Trips = asyncHandler(async (req, res) => {
   });
 });
 
-export { Trips };
+const getTrips = asyncHandler(async (req, res) => {
+  const Trips = await Trips.find();
+  res.status(200).json({
+    status: "success",
+    message: "Trips fetched successfully",
+    data: Trips,
+  });
+});
+
+
+export { Trips, getTrips };
