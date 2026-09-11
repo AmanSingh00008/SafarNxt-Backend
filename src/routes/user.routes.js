@@ -27,3 +27,8 @@ router.route ( "/Register").post(
     ]),
     registerUser
 )
+
+router.route("/login").post(LoginUser)
+router.route("/accessRefreshToken").post(accessRefreshToken);
+
+router.route
