@@ -55,4 +55,19 @@ const updateTrips = asyncHandler(async (req, res) => {
   });
 });
 
-export { Trips, getTrips, updateTrips };
+const DeleteTrips = asyncHandler(async(req, res) => {
+  const {Trips} = req.body;
+
+  if(!Trips){
+    throw new ApiError(400, "Trip not found")
+  }
+  const deletedTrip = await Trips.findByIdAndDelete(req.params.id);
+
+  res.status(200).json({
+    status: "success",
+    message: "Trip deleted successfully",
+    data: deletedTrip,
+  });
+})
+
+export { Trips, getTrips, updateTrips, DeleteTrips };
