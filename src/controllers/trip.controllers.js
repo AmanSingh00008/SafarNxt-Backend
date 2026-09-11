@@ -31,5 +31,28 @@ const getTrips = asyncHandler(async (req, res) => {
   });
 });
 
+const updateTrips = asyncHandler(async (req, res) => {
+  const { title, price, duration } = req.body;
 
-export { Trips, getTrips };
+  if (!title || !price || !duration) {
+    throw new ApiError(400, "All fields are Required");
+  }
+
+  const updatedTrip = await Trips.findByIdAndUpdate(
+    req.params.id,
+    {
+      title,
+      price,
+      duration,
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: "Trip updated successfully",
+    data: updatedTrip,
+  });
+});
+
+export { Trips, getTrips, updateTrips };
