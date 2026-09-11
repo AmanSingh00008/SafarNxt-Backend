@@ -9,7 +9,7 @@ const Trips = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are Required");
   }
 
-  const Trips = create.Trips({
+  const Trips = await create.Trips({
     title: title,
     price: price,
     duration: duration,
