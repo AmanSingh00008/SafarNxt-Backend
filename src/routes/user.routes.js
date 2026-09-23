@@ -34,3 +34,5 @@ router.route("/LogOutUser").post(LogOutUser);
 router.route("/getCurrentUser").get(getCurrentUser);
 router.route("/changeCurrentPassword").patch(changeCurrentPassword);
 router.route("/updateAccountDetails").patch(updateAccountDetails);
+
+export default router;
