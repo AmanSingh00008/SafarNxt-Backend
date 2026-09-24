@@ -66,7 +66,9 @@ const DeleteTrips = asyncHandler(async(req, res) => {
     status: "success",
     message: "Trip deleted successfully",
     data: deletedTrip,
-  });
+  },
+
+);
 })
 
 export { Trips, getTrips, updateTrips, DeleteTrips };
