@@ -66,6 +66,7 @@ const createDestination = asyncHandler(async (req, res) => {
 
 
 // Get All Destinations
+
 const getAllDestinations = asyncHandler(async (req, res) => {
   const destinations = await Destination.find({
     isActive: true,
