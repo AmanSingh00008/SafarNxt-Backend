@@ -1,5 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import{ Trips} from "../models/trips.models.js"
+
 
 const Trips = asyncHandler(async (req, res) => {
   const { title, price, duration } = req.body;
