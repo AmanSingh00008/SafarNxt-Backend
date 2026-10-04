@@ -20,13 +20,7 @@ const notificationSchema = new mongoose.Schema(
 
     type: {
       type: String,
-      enum: [
-        "booking",
-        "payment",
-        "reminder",
-        "promotion",
-        "system",
-      ],
+      enum: ["booking", "payment", "reminder", "promotion", "system"],
       required: true,
     },
 
@@ -42,10 +36,7 @@ const notificationSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-export const Notification = mongoose.model(
-  "Notification",
-  notificationSchema
-);
+export const Notification = mongoose.model("Notification", notificationSchema);
