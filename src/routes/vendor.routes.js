@@ -1,4 +1,7 @@
 import { Router } from "express";
+import { authenticateToken } from "../middleware/auth.middleware.js";
+
+
 
 import {
   registerVendor,
@@ -14,25 +17,25 @@ const router = Router();
 
 
 // Register vendor
-router.post("/", registerVendor);
+router.post("/", authenticateToken, registerVendor);
 
 // Get all vendors
-router.get("/", getAllVendors);
+router.get("/", authenticateToken, getAllVendors);
 
 // Get vendor by ID
-router.get("/:vendorId", getVendorById);
+router.get("/:vendorId", authenticateToken, getVendorById);
 
 // Update vendor
-router.put("/:vendorId", updateVendor);
+router.put("/:vendorId", authenticateToken, updateVendor);
 
 // Approve vendor
-router.patch("/:vendorId/approve", approveVendor);
+router.patch("/:vendorId/approve", authenticateToken, approveVendor);
 
 // Reject vendor
-router.patch("/:vendorId/reject", rejectVendor);
+router.patch("/:vendorId/reject", authenticateToken, rejectVendor);
 
 // Delete vendor
-router.delete("/:vendorId", deleteVendor);
+router.delete("/:vendorId", authenticateToken, deleteVendor);
 
 
 export default router;
