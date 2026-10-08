@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authenticateToken } from "../middleware/auth.middleware.js";
 
 import {
     createBooking,
@@ -10,15 +11,15 @@ import {
 const router = Router();
 
 // Create booking
-router.post("/", createBooking);
+router.post("/", authenticateToken, createBooking);
 
 // Get bookings
-router.get("/", getBookings);
+router.get("/", authenticateToken, getBookings);
 
 // Update booking
-router.patch("/:bookingId", updateBooking);
+router.patch("/:bookingId", authenticateToken, updateBooking);
 
 // Delete booking
-router.delete("/:bookingId", deleteBooking);
+router.delete("/:bookingId", authenticateToken, deleteBooking);
 
 export default router;
