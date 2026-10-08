@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+const travellerSchema = new mongoose.Schema({
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  dateOfBirth: { type: Date },
+  gender: { type: String, enum: ["male", "female", "other"] },
+  phone: { type: String },
+  email: { type: String },
+  passportNumber: { type: String },
+});
+
 const bookingSchema = new mongoose.Schema(
   {
     bookingNumber: {

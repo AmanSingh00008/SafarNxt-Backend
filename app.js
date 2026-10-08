@@ -1,8 +1,14 @@
 import "dotenv/config";
 import express from "express";
 import connectDB from "./src/db/index.js";
+import bookingRouter from "./src/routes/booking.routes.js";
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/bookings", bookingRouter);
 
 connectDB()
     .then(() => {

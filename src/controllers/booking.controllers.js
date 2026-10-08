@@ -1,20 +1,26 @@
-import { bookingModel } from "../models/bookingmodels.js";
+import { Booking as bookingModel } from "../models/bookingmodels.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiRespone.js";
 
 const createBooking = asyncHandler(async (req, res) => {
-  const { userId, roomId, startDate, endDate } = req.body;
+  const { bookingNumber, customer, trip, travelDate, travellers, guests, pricing, payment, status, specialRequests } = req.body;
 
-  if (!userId || !roomId || !startDate || !endDate) {
+  if (!bookingNumber || !customer || !trip || !travelDate || !travellers || !pricing) {
     throw new ApiError(400, "Missing required fields");
   }
 
   const booking = await bookingModel.create({
-    userId,
-    roomId,
-    startDate,
-    endDate,
+    bookingNumber,
+    customer,
+    trip,
+    travelDate,
+    travellers,
+    guests,
+    pricing,
+    payment,
+    status,
+    specialRequests,
   });
 
   return res

@@ -5,7 +5,7 @@ import {
     getBookings,
     updateBooking,
     deleteBooking
-} from "../controllers/booking.controller.js";
+} from "../controllers/booking.controllers.js";
 
 const router = Router();
 
